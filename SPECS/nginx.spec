@@ -2,7 +2,7 @@
 %global  nginx_user          nginx
 
 Name:              nginx
-Version:           1.10.2
+Version:           1.14.2
 Release:           1%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -17,6 +17,9 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Source0:           http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:           http://nginx.org/download/nginx-%{version}.tar.gz.asc
+Source2:           openssl-1.1.1a.tar.gz
+Source3:           ngx_devel_kit-0.3.0.tar.gz
+Source4:           lua-nginx-module-0.10.13.tar.gz
 Source10:          nginx.init
 Source11:          nginx.logrotate
 Source12:          nginx.conf
@@ -37,7 +40,7 @@ Source211:         UPGRADE-NOTES-1.0-to-1.10
 # -D_FORTIFY_SOURCE=2 causing warnings to turn into errors.
 Patch0:            nginx-auto-cc-gcc.patch
 
-BuildRequires:     openssl-devel
+#BuildRequires:     openssl-devel
 BuildRequires:     pcre-devel
 BuildRequires:     zlib-devel
 
@@ -45,7 +48,7 @@ Requires:          nginx-filesystem = %{version}-%{release}
 # Introduced at 1.10.1-1 to ease upgrade path. To be removed later.
 Requires:          nginx-all-modules = %{version}-%{release}
 
-Requires:          openssl
+#Requires:          openssl
 Requires:          pcre
 Requires(pre):     nginx-filesystem
 Requires(post):    chkconfig
@@ -155,6 +158,12 @@ Requires:          nginx
 cp %{SOURCE200} .
 cp %{SOURCE210} .
 cp %{SOURCE211} .
+cp %{SOURCE2} .
+cp %{SOURCE3} .
+cp %{SOURCE4} .
+tar zxvf %{SOURCE2}
+tar zxvf %{SOURCE3}
+tar zxvf %{SOURCE4}
 
 %if 0%{?rhel} < 6
 # OpenSSL on RHEL 5 is too old for HTTP/2 support.
@@ -168,6 +177,9 @@ sed -i -e 's/http2 //g' %{SOURCE14}
 # variable.
 export DESTDIR=%{buildroot}
 ./configure \
+    --with-openssl=openssl-1.1.1a  \
+    --add-module=lua-nginx-module-0.10.13 \
+    --add-module=ngx_devel_kit-0.3.0 \
     --prefix=%{_datadir}/nginx \
     --sbin-path=%{_sbindir}/nginx \
     --modules-path=%{_libdir}/nginx/modules \
