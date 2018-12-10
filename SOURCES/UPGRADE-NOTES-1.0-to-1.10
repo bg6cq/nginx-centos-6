@@ -1,0 +1,196 @@
+#############
+Upgrade notes
+#############
+
+To resolve numerous security flaws, the nginx package was updated to 1.10.x.
+
+You should review your configuration files in /etc/nginx to determine if there
+are any incompatibilities. Below is a summary of the main incompatible changes.
+Some nginx directives have been changed or removed, so you may need to modify
+your configuration.
+
+Please see upstream release notes for a complete list of new features,
+bug fixes, and changes: http://nginx.org/en/CHANGES-1.10
+One notable feature is support for HTTP/2.
+
+Nginx gained support for dynamic modules. As part of this update, dynamic
+modules have been split into subpackages. For the time being these are hard
+dependencies to aid the upgrade path. When you install nginx, all of these
+modules are installed and enabled by default:
+  - nginx-mod-http-geoip
+  - nginx-mod-http-image-filter
+  - nginx-mod-http-perl
+  - nginx-mod-http-xslt-filter
+  - nginx-mod-mail
+  - nginx-mod-stream
+
+Changes with nginx 1.10.x
+
+    *) Change: non-idempotent requests (POST, LOCK, PATCH) are no longer
+       passed to the next server by default if a request has been sent to a
+       backend; the "non_idempotent" parameter of the "proxy_next_upstream"
+       directive explicitly allows retrying such requests.
+
+    *) Change: now the "output_buffers" directive uses two buffers by
+       default.
+
+    *) Change: now nginx limits subrequests recursion, not simultaneous
+       subrequests.
+
+    *) Change: now nginx checks the whole cache key when returning a
+       response from cache.
+       Thanks to Gena Makhomed and Sergey Brester.
+
+    *) Change: the "proxy_downstream_buffer" and "proxy_upstream_buffer"
+       directives of the stream module are replaced with the
+       "proxy_buffer_size" directive.
+
+    *) Change: duplicate "http", "mail", and "stream" blocks are now
+       disallowed.
+
+    *) Change: now SSLv3 protocol is disabled by default.
+
+    *) Change: some long deprecated directives are not supported anymore.
+
+    *) Change: obsolete aio and rtsig event methods have been removed.
+
+Changes with nginx 1.8.x
+
+    *) Change: the "sendfile" parameter of the "aio" directive is
+       deprecated; now nginx automatically uses AIO to pre-load data for
+       sendfile if both "aio" and "sendfile" directives are used.
+
+    *) Change: now the "If-Modified-Since", "If-Range", etc. client request
+       header lines are passed to a backend while caching if nginx knows in
+       advance that the response will not be cached (e.g., when using
+       proxy_cache_min_uses).
+
+    *) Change: now after proxy_cache_lock_timeout nginx sends a request to a
+       backend with caching disabled; the new directives
+       "proxy_cache_lock_age", "fastcgi_cache_lock_age",
+       "scgi_cache_lock_age", and "uwsgi_cache_lock_age" specify a time
+       after which the lock will be released and another attempt to cache a
+       response will be made.
+
+    *) Change: the "log_format" directive can now be used only at http
+       level.
+
+    *) Change: now nginx takes into account the "Vary" header line in a
+       backend response while caching.
+
+    *) Change: the deprecated "limit_zone" directive is not supported
+       anymore.
+
+    *) Change: now the "stub_status" directive does not require a parameter.
+
+    *) Change: URI escaping now uses uppercase hexadecimal digits.
+       Thanks to Piotr Sikora.
+
+Changes with nginx 1.6.x
+
+    *) Change: improved hash table handling; the default values of the
+       "variables_hash_max_size" and "types_hash_bucket_size" were changed
+       to 1024 and 64 respectively.
+
+    *) Change: now nginx expects escaped URIs in "X-Accel-Redirect" headers.
+
+    *) Change: a logging level of auth_basic errors about no user/password
+       provided has been lowered from "error" to "info".
+
+    *) Change: now nginx assumes HTTP/1.0 by default if it is not able to
+       detect protocol reliably.
+
+    *) Change: the "js" extension MIME type has been changed to
+       "application/javascript"; default value of the "charset_types"
+       directive was changed accordingly.
+
+    *) Change: now the "image_filter" directive with the "size" parameter
+       returns responses with the "application/json" MIME type.
+
+    *) Change in internal API: now u->length defaults to -1 if working with
+       backends in unbuffered mode.
+
+    *) Change: now after receiving an incomplete response from a backend
+       server nginx tries to send an available part of the response to a
+       client, and then closes client connection.
+
+Changes with nginx 1.4.x
+
+    *) Change: opening and closing a connection without sending any data in
+       it is no longer logged to access_log with error code 400.
+
+    *) Change: a compiler with name "cc" is now used by default.
+
+    *) Change: domain names specified in configuration file are now resolved
+       to IPv6 addresses as well as IPv4 ones.
+
+    *) Change: now if the "include" directive with mask is used on Unix
+       systems, included files are sorted in alphabetical order.
+
+    *) Change: the "add_header" directive adds headers to 201 responses.
+
+    *) Change: the ngx_http_mp4_module module no longer skips tracks in
+       formats other than H.264 and AAC.
+
+    *) Change: the "ipv6only" parameter is now turned on by default for
+       listening IPv6 sockets.
+
+    *) Change: the "single" parameter of the "keepalive" directive is now
+       ignored.
+
+    *) Change: SSL compression is now disabled when using all versions of
+       OpenSSL, including ones prior to 1.0.0.
+
+Changes with nginx 1.2.x
+
+    *) Change: now if the "include" directive with mask is used on Unix
+       systems, included files are sorted in alphabetical order.
+
+    *) Change: the "add_header" directive adds headers to 201 responses.
+
+    *) Change: the "single" parameter of the "keepalive" directive is now
+       ignored.
+
+    *) Change: SSL compression is now disabled when using all versions of
+       OpenSSL, including ones prior to 1.0.0.
+
+    *) Change: keepalive connections are no longer disabled for Safari by
+       default.
+
+    *) Change: the simultaneous subrequest limit has been raised to 200.
+
+    *) Change: a "proxy_pass" directive without URI part now uses changed
+       URI after redirection with the "error_page" directive.
+       Thanks to Lanshun Zhou.
+
+    *) Change: now double quotes are encoded in an "echo" SSI-command
+       output.
+       Thanks to Zaur Abasmirzoev.
+
+    *) Change: the ngx_http_limit_zone_module was renamed to the
+       ngx_http_limit_conn_module.
+
+    *) Change: the "limit_zone" directive was superseded by the
+       "limit_conn_zone" directive with a new syntax.
+
+    *) Change in internal API: now module context data are cleared while
+       internal redirect to named location.
+       Requested by Yichun Zhang.
+
+    *) Change: if a server in an upstream failed, only one request will be
+       sent to it after fail_timeout; the server will be considered alive if
+       it will successfully respond to the request.
+
+    *) Change: now the 0x7F-0x1F characters are escaped as \xXX in an
+       access_log.
+
+    *) Change: now if total size of all ranges is greater than source
+       response size, then nginx disables ranges and returns just the source
+       response.
+
+    *) Change: now cache loader processes either as many files as specified
+       by "loader_files" parameter or works no longer than time specified by
+       the "loader_threshold" parameter during each iteration.
+
+    *) Change: now SIGWINCH signal works only in daemon mode.
+
