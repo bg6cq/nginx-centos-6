@@ -12,7 +12,8 @@ epel中的nginx版本比较低，下面是CentOS 6.10 编译nginx.1.42.2并包�
 
 ```
 rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-yum -y install git gcc rpm-build rpmdevtools geoip-devel gd-devel pcre-devel perl-devel perl-ExtUtils-Embed libxslt-devel
+yum -y install git gcc rpm-build rpmdevtools geoip-devel gd-devel pcre-devel
+yum -y install perl-devel perl-ExtUtils-Embed libxslt-devel
 yum update
 reboot
 ```
