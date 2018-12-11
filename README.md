@@ -31,7 +31,7 @@ git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
 
 ## 4. 编译需要的LuaJIT，并安装
 
-编译好的文件在 /root/rpmbuild/RPMS/x86_64/ 目录。
+编译好的文件在 /root/rpmbuild/RPMS/x86_64 目录。
 
 ```
 cd /root/rpmbuild
@@ -46,7 +46,7 @@ rpm -i RPMS/x86_64/LuaJIT-2.0.5-1.el6.x86_64.rpm
 cd /root/rpmbuild
 rpmbuild -ba SPECS/nginx.spec
 ```
-编译好的文件在 /root/rpmbuild/RPMS/x86_64/ 目录。
+编译好的文件在 /root/rpmbuild/RPMS/x86_64 和 /root/rpmbuild/RPMS/noarch 目录。
 
 
 ## 附录：
