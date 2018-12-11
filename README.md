@@ -53,6 +53,7 @@ rpmbuild -ba SPECS/nginx.spec
 
 CentOS默认的nginx之外，下载了如下软件：
 
+* http://nginx.org/download/nginx-1.14.2.tar.gz http://nginx.org/download/nginx-1.14.2.tar.gz.asc
 * http://luajit.org/download/LuaJIT-2.0.5.tar.gz
 * https://www.openssl.org/source/openssl-1.1.1a.tar.gz
 * https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz
