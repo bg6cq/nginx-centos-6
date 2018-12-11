@@ -2,6 +2,8 @@
 
 epel中的nginx版本比较低，下面是CentOS 6.10 编译nginx.1.42.2并包含lua支持的步骤：
 
+注： run.sh 文件有完整的脚本，直接运行即可。
+
 ## 1. 系统准备
 
 首先下载 CentOS 6.10 x86_64 最小安装
@@ -26,7 +28,7 @@ reboot
 
 ```
 cd /root
-git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
+git clone https://git.ustc.edu.cn/james/centos-nginx.git rpmbuild
 ```
 
 ## 4. 编译需要的LuaJIT，并安装

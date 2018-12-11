@@ -5,7 +5,7 @@ yum -y install perl-devel perl-ExtUtils-Embed libxslt-devel
 yum update
 
 cd /root
-git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
+git clone https://git.ustc.edu.cn/james/centos-nginx.git rpmbuild
 
 cd /root/rpmbuild
 rpmbuild -bb SPECS/LuaJIT.spec
