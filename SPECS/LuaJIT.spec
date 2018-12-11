@@ -37,7 +37,7 @@ ln -s libluajit-5.1.so.2.0.5 $RPM_BUILD_ROOT/%{_libdir}/libluajit-5.1.so.2
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/luajit-2.0.5/jit/
 cp src/jit/* $RPM_BUILD_ROOT/%{_datadir}/luajit-2.0.5/jit/
 
-mkdir -p $RPM_BUILD_ROOT/%{_mandir} /man1
+mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
 cp etc/luajit.1 $RPM_BUILD_ROOT/%{_mandir}/man1
 
 %clean

@@ -5,10 +5,14 @@ yum update
 reboot
 yum -y install git gcc rpm-build rpmdevtools
 
+cd /root
+git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
+cd /root/rpmbuild
+rpmbuild -bb SPECS/LuaJIT.spec
+
 pcre-devel openssl-devel libxslt-devel libxml2 gd-devel geoip-devel 
 
 cd /root/rpmbuild/SPECS
-rpmbuild -bb LuaJIT.spec
 rpmbuild -bb LuaJIT.spec
 
 
