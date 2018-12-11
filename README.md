@@ -15,7 +15,7 @@ epel中的nginx版本比较低，下面是CentOS 6.10 编译nginx.1.42.2并包�
 ```
 rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 yum -y install git gcc rpm-build rpmdevtools geoip-devel gd-devel pcre-devel
-yum -y install perl-devel perl-ExtUtils-Embed libxslt-devel
+yum -y install perl-devel perl-ExtUtils-Embed libxslt-devel createrepo
 yum update
 reboot
 ```
@@ -50,6 +50,41 @@ rpmbuild -ba SPECS/nginx.spec
 ```
 编译好的文件在 /root/rpmbuild/RPMS/x86_64 和 /root/rpmbuild/RPMS/noarch 目录。
 
+## 6. 搭建yum库
+
+编译好的rpm包可以安装，但是自己手工安装需要处理依赖关系，比较麻烦。
+
+下面是搭建yum库的方法。
+
+```
+mkdir -p /var/www/html/local-yum/x86_64/RPMS
+cp /root/rpmbuild/RPMS/x86_64/* /root/rpmbuild/RPMS/noarch/* /var/www/html/local-yum/x86_64/RPMS
+createrepo /var/www/html/local-yum/x86_64/
+```
+
+## 7. 使用本地yum源
+
+如果是本地使用，在/etc/yum.repos.d 下建立文件 local.repo，内容为：
+```
+[local-yum]
+name=local-yum
+baseurl=file:///var/www/html/local-yum/x86_64
+enabled=1
+gpgcheck=0
+```
+
+之后就可以使用自己本地源。
+
+## 8. 使用远程 yum 源
+
+如果把 /var/www/html/local-yum/ 目录通过web服务器对外提供，其他机器只要 建立文件 local.repo 即可使用。
+```
+[local-yum]
+name=local-yum
+baseurl=http://my-yum.ustc.edu.cn/local-yum/x86_64
+enabled=1
+gpgcheck=0
+```
 
 ## 附录：
 
