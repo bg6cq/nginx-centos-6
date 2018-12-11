@@ -1,62 +1,57 @@
-### CentOS 6.10 编译nginx
+# CentOS 6.10 编译nginx
 
-CentOS 6.10 最小安装
+下面是CentOS 6.10 编译nginx.1.42.2并包含lua支持的步骤：
+
+## 1. 系统准备
+
+首先下载 CentOS 6.10 x86_64 最小安装
+
+## 2. 环境准备
+
+包括启用epel库（geoip等在epel库中），安装rpmbuild等需要的软件包
+
+```
+rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum -y install git gcc rpm-build rpmdevtools geoip-devel gd-devel pcre-devel perl-devel perl-ExtUtils-Embed libxslt-devel
 yum update
 reboot
-yum -y install git gcc rpm-build rpmdevtools
+```
 
+## 3. 下载编译需要的文件
+
+编译需要的文件放在 https://git.ustc.edu.cn/james/centos-nginx ，下载到默认的 /root/rpmbuild 目录
+
+下载前该目录不能存在。如果目录已经存在，请下载到其他位置，把SOURCES、SPECS目录下文件 copy 到 /root/rpmbuild 对应目录下也可以。
+
+```
 cd /root
 git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
+```
+
+## 4. 编译需要LuaJIT 并安装
+
+编译好的文件在 /root/rpmbuild/RPMS/x86_64/ 目录。
+
+```
 cd /root/rpmbuild
 rpmbuild -bb SPECS/LuaJIT.spec
 
-pcre-devel openssl-devel libxslt-devel libxml2 gd-devel geoip-devel 
+rpm -i RPMS/x86_64/LuaJIT-2.0.5-1.el6.x86_64.rpm
+```
 
-cd /root/rpmbuild/SPECS
-rpmbuild -bb LuaJIT.spec
+## 5. 编译nginx
 
-
-
-
-wget http://nginx.org/download/nginx-1.14.2.tar.gz
-wget http://luajit.org/download/LuaJIT-2.0.5.tar.gz
-lget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
-wget https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz
-wget https://github.com/openresty/lua-nginx-module/archive/v0.10.13.tar.gz
-
-tar zxvf nginx-1.14.1.tar.gz
-tar zxvf openssl-1.1.1.tar.gz
-tar zxvf v0.3.0.tar.gz
-tar zxvf v0.10.13.tar.gz
-
-tar zxvf LuaJIT-2.0.5.tar.gz
-cd LuaJIT-2.0.5
-make
-make install
-
-export LUAJIT_LIB=/usr/local/lib
-export LUAJIT_INC=/usr/local/include/luajit-2.0
-echo "/usr/local/lib" > /etc/ld.so.conf.d/luajit.conf
-ldconfig
-
-cp nginx-1.14.1
+```
+cd /root/rpmbuild
+rpmbuild -ba SPECS/nginx.spec
+```
 
 
-./configure --prefix=/usr/local/nginx --with-openssl=/usr/src/openssl-1.1.1  \
---add-module=/usr/src/lua-nginx-module-0.10.13 \
---add-module=/usr/src/ngx_devel_kit-0.3.0 \
---conf-path=/etc/nginx/nginx.conf \
---error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log \
---http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy \
---http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi \
---http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/lock/subsys/nginx \
---user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module \
---with-http_realip_module --with-http_addition_module --with-http_xslt_module=dynamic \
---with-http_image_filter_module=dynamic --with-http_sub_module --with-http_dav_module \
---with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module \
---with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module \
---with-http_slice_module --with-http_stub_status_module --with-mail=dynamic --with-mail_ssl_module \
---with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module --with-debug \
---with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' --with-ld-opt=' -Wl,-E'
+## 附录：
 
-cp objs/nginx /usr/local/nginx/sbin/
+CentOS默认的nginx之外，下载了如下软件：
+
+* http://luajit.org/download/LuaJIT-2.0.5.tar.gz
+* https://www.openssl.org/source/openssl-1.1.1a.tar.gz
+* https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz
+* https://github.com/openresty/lua-nginx-module/archive/v0.10.13.tar.gz

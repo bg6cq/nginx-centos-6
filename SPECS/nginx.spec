@@ -43,6 +43,7 @@ Patch0:            nginx-auto-cc-gcc.patch
 #BuildRequires:     openssl-devel
 BuildRequires:     pcre-devel
 BuildRequires:     zlib-devel
+BuildRequires:     LuaJIT
 
 Requires:          nginx-filesystem = %{version}-%{release}
 # Introduced at 1.10.1-1 to ease upgrade path. To be removed later.
@@ -50,6 +51,7 @@ Requires:          nginx-all-modules = %{version}-%{release}
 
 #Requires:          openssl
 Requires:          pcre
+Requires:          LuaJIT
 Requires(pre):     nginx-filesystem
 Requires(post):    chkconfig
 Requires(preun):   chkconfig, initscripts
