@@ -1,9 +1,11 @@
 ### CentOS 6.10 编译nginx
 
-CentOS 最小安装
+CentOS 6.10 最小安装
 yum update
 reboot
-yum -y install gcc pcre-devel openssl-devel libxslt-devel libxml2 gd-devel geoip-devel rpm-build rpmdevtools
+yum -y install git gcc rpm-build rpmdevtools
+
+pcre-devel openssl-devel libxslt-devel libxml2 gd-devel geoip-devel 
 
 cd /root/rpmbuild/SPECS
 rpmbuild -bb LuaJIT.spec
