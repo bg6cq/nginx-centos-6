@@ -1,6 +1,6 @@
 # CentOS 6.10 编译nginx
 
-下面是CentOS 6.10 编译nginx.1.42.2并包含lua支持的步骤：
+epel中的nginx版本比较低，下面是CentOS 6.10 编译nginx.1.42.2并包含lua支持的步骤：
 
 ## 1. 系统准备
 
@@ -28,7 +28,7 @@ cd /root
 git clone https://git.ustc.edu.cn/james/centos-nginx rpmbuild
 ```
 
-## 4. 编译需要LuaJIT 并安装
+## 4. 编译需要的LuaJIT，并安装
 
 编译好的文件在 /root/rpmbuild/RPMS/x86_64/ 目录。
 
@@ -45,6 +45,7 @@ rpm -i RPMS/x86_64/LuaJIT-2.0.5-1.el6.x86_64.rpm
 cd /root/rpmbuild
 rpmbuild -ba SPECS/nginx.spec
 ```
+编译好的文件在 /root/rpmbuild/RPMS/x86_64/ 目录。
 
 
 ## 附录：
