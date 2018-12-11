@@ -18,6 +18,7 @@ LuaJIT 2.0.5, rpm packaged by james@ustc.edu.cn 20181210
 sed -i -e 's/export PREFIX= \/usr\/local/export PREFIX= \/usr/' Makefile
 
 %build
+%define debug_package %{nil}
 make %{?_smp_mflags}
 
 %install

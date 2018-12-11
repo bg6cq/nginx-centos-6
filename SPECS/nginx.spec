@@ -173,6 +173,7 @@ sed -i -e 's/http2 //g' %{SOURCE14}
 %endif
 
 %build
+%define debug_package %{nil}
 # nginx does not utilize a standard configure script.  It has its own
 # and the standard configure options cause the nginx configure script
 # to error out.  This is is also the reason for the DESTDIR environment
