@@ -1,10 +1,10 @@
 # CentOS 6.10 nginx编译和优化
 
-CentOS本身没有nginx，epel中的nginx版本比较低，下面是CentOS 6.10 编译nginx.1.42.2并包含lua支持的步骤，最后给出一些优化的方法：
+CentOS本身没有nginx，epel中的nginx版本比较低，下面是CentOS 6.10编译nginx.1.42.2并包含lua支持的步骤，最后给出一些优化的方法。
 
 如果不愿意自己编译，可以参照"7. 使用远程 yum 源"设置科大的nginx源。
 
-注： run.sh 文件有完整的编译过程脚本，直接运行即可。
+注：run.sh 文件有完整的编译过程脚本，直接运行即可。
 
 ## 1. 环境准备
 
@@ -22,9 +22,9 @@ reboot
 
 ## 2. 下载编译需要的文件
 
-编译需要的文件放在 https://git.ustc.edu.cn/james/centos-nginx ，下载到默认的 /root/rpmbuild 目录
+编译需要的文件放在 https://git.ustc.edu.cn/james/centos-nginx ，下载到默认的`/root/rpmbuild`目录
 
-下载前该目录不能存在。如果目录已经存在，请下载到其他位置，把SOURCES、SPECS目录下文件 copy 到 /root/rpmbuild 对应目录下也可以。
+下载前该目录不能存在。如果目录已经存在，请下载到其他位置，把SOURCES、SPECS目录下文件 copy 到`/root/rpmbuild`对应目录下也可以。
 
 ```
 cd /root
@@ -33,7 +33,7 @@ git clone https://git.ustc.edu.cn/james/centos-nginx.git rpmbuild
 
 ## 3. 编译需要的LuaJIT，并安装
 
-编译好的文件在 /root/rpmbuild/RPMS/x86_64 目录。
+编译好的文件在`/root/rpmbuild/RPMS/x86_64`目录。
 
 ```
 cd /root/rpmbuild
@@ -48,7 +48,7 @@ rpm -i RPMS/x86_64/LuaJIT-2.0.5-1.el6.x86_64.rpm
 cd /root/rpmbuild
 rpmbuild -ba SPECS/nginx.spec
 ```
-编译好的文件在 /root/rpmbuild/RPMS/x86_64 和 /root/rpmbuild/RPMS/noarch 目录。
+编译好的文件在`/root/rpmbuild/RPMS/x86_64`和`/root/rpmbuild/RPMS/noarch`目录。
 
 ## 5. 搭建yum库
 
@@ -64,7 +64,7 @@ createrepo /var/www/html/local-yum/x86_64/
 
 ## 6. 使用本地yum源
 
-如果是本地使用，建立文件 /etc/yum.repos.d/local.repo，内容为：
+如果是本地使用，建立文件`/etc/yum.repos.d/local.repo`，内容为：
 ```
 [local-yum]
 name=local-yum
@@ -76,7 +76,7 @@ gpgcheck=0
 
 ## 7. 使用远程 yum 源
 
-如果把 /var/www/html/local-yum/ 目录通过web服务器对外提供，其他机器只要 建立文件 local.repo 即可使用。
+如果把`/var/www/html/local-yum/`目录通过web服务器对外提供，其他机器只要 建立文件`/etc/yum.repos.d/local.repo`即可使用。
 ```
 [local-yum]
 name=local-yum
