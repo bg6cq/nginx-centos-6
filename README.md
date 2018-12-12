@@ -1,8 +1,10 @@
 # CentOS 6.10 nginx编译和优化
 
-CentOS本身没有nginx，epel中的nginx版本比较低，下面是CentOS 6.10编译nginx.1.42.2并包含lua支持的步骤，最后给出一些优化的方法。
+CentOS本身没有nginx，epel中的nginx版本比较低，这里给出CentOS 6.10编译nginx.1.42.2并包含lua支持的步骤，最后还给出一些系统优化的方法。
 
-如果仅仅为了使用最新的nginx，不愿意自己编译，请直接从"7. 使用远程 yum 源"，设置科大的nginx源，执行`yum update nginx`即可。
+如果仅仅为了使用最新的nginx，不愿意自己编译，请下载CentOS 6.10 x86_64最小安装，
+执行`rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm`启用epep库，
+按照"7. 使用远程 yum 源"，设置科大的nginx源，执行`yum update nginx`即可。这样安装的系统占用1G左右的磁盘空间。
 
 注：run.sh 文件有完整的编译过程脚本，直接运行即可在全新安装的CentOS 6.10中完成编译过程。
 
