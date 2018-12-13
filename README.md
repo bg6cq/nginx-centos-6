@@ -3,7 +3,7 @@
 CentOS本身没有nginx，epel中的nginx版本比较低，这里给出CentOS 6.10编译nginx.1.42.2并包含lua支持的步骤，最后还给出一些系统优化的方法。
 
 如果仅仅为了使用最新的nginx，不愿意自己编译，请下载CentOS 6.10 x86_64最小安装，
-执行`rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm`启用epep库，
+执行`rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm`启用epep库，
 按照"7. 使用远程 yum 源"，设置科大的nginx源，执行`yum update nginx`即可。这样安装的系统占用1G左右的磁盘空间。
 
 注：run.sh 文件有完整的编译过程脚本，直接运行即可在全新安装的CentOS 6.10中完成编译过程。
@@ -15,7 +15,7 @@ CentOS本身没有nginx，epel中的nginx版本比较低，这里给出CentOS 6.
 运行如下命令，启用epel库（geoip等在epel库中），安装rpmbuild等需要的软件包
 
 ```
-rpm -i https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
 yum -y install git gcc rpm-build rpmdevtools geoip-devel gd-devel pcre-devel
 yum -y install perl-devel perl-ExtUtils-Embed libxslt-devel createrepo
 yum -y update
@@ -24,13 +24,13 @@ reboot
 
 ## 2. 下载编译需要的文件
 
-编译需要的文件放在 https://git.ustc.edu.cn/james/centos-nginx ，下载到默认的`/root/rpmbuild`目录
+编译需要的文件放在 https://git.ustc.edu.cn/james/nginx-centos-6 ，下载到默认的`/root/rpmbuild`目录
 
 下载前该目录不能存在。如果目录已经存在，请下载到其他位置，把SOURCES、SPECS目录下文件 copy 到`/root/rpmbuild`对应目录下也可以。
 
 ```
 cd /root
-git clone https://git.ustc.edu.cn/james/centos-nginx.git rpmbuild
+git clone https://git.ustc.edu.cn/james/nginx-centos-6.git rpmbuild
 ```
 
 ## 3. 编译需要的LuaJIT，并安装
@@ -59,9 +59,9 @@ rpmbuild -ba SPECS/nginx.spec
 下面是搭建yum库的方法。
 
 ```
-mkdir -p /var/www/html/local-yum/x86_64/RPMS
-cp /root/rpmbuild/RPMS/x86_64/* /root/rpmbuild/RPMS/noarch/* /var/www/html/local-yum/x86_64/RPMS
-createrepo /var/www/html/local-yum/x86_64/
+mkdir -p /var/www/html/local-yum/6/x86_64/RPMS
+cp /root/rpmbuild/RPMS/x86_64/* /root/rpmbuild/RPMS/noarch/* /var/www/html/local-yum/6/x86_64/RPMS
+createrepo /var/www/html/local-yum/6/x86_64/
 ```
 
 ## 6. 使用本地yum源
@@ -70,7 +70,7 @@ createrepo /var/www/html/local-yum/x86_64/
 ```
 [local-yum]
 name=local-yum
-baseurl=file:///var/www/html/local-yum/x86_64
+baseurl=file:///var/www/html/local-yum/6/x86_64
 enabled=1
 gpgcheck=0
 ```
@@ -82,7 +82,7 @@ gpgcheck=0
 ```
 [local-yum]
 name=local-yum
-baseurl=http://revproxy.ustc.edu.cn:8000/local-yum/x86_64
+baseurl=http://revproxy.ustc.edu.cn:8000/local-yum/6/x86_64
 enabled=1
 gpgcheck=0
 ```
@@ -137,7 +137,7 @@ echo 60 > nf_conntrack_udp_timeout_stream
 
 ## 附录：
 
-CentOS默认的nginx之外，下载了如下软件：
+CentOS epel 默认的nginx之外，下载了如下软件：
 
 * http://nginx.org/download/nginx-1.14.2.tar.gz http://nginx.org/download/nginx-1.14.2.tar.gz.asc
 * http://luajit.org/download/LuaJIT-2.0.5.tar.gz
