@@ -3,7 +3,7 @@
 
 Name:              nginx
 Version:           1.14.2
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
 Group:             System Environment/Daemons
