@@ -104,14 +104,14 @@ gpgcheck=0
 
 8.2 增加打开的文件数
 
-注：使用本文编译的nginx，已经修改了这里，不需要单独增加。
+注：使用本文编译的nginx，已经修改了这两处地方，不需要单独增加。
 
-编辑文件`/etc/sysconfig/ngin`，增加1行：
+编辑文件`vi /etc/sysconfig/ngin`，增加1行：
 ```
 ulimit -HSn 655360
 ```
 
-编辑文件`vi /etc/sysctl.conf`，增加1行:
+编辑文件`vi /etc/sysctl.d/file-max.conf`，增加1行:
 ```
 fs.file-max = 655360
 ```

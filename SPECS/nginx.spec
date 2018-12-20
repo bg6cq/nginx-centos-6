@@ -27,6 +27,7 @@ Source13:          default.conf
 Source14:          ssl.conf
 Source15:          virtual.conf
 Source16:          nginx.sysconfig
+Source17:          file-max.conf
 Source100:         index.html
 Source101:         poweredby.png
 Source102:         nginx-logo.png
@@ -246,6 +247,8 @@ install -p -D -m 0644 %{SOURCE11} \
     %{buildroot}%{_sysconfdir}/logrotate.d/nginx
 install -p -D -m 0644 %{SOURCE16} \
     %{buildroot}%{_sysconfdir}/sysconfig/nginx
+install -p -D -m 0644 %{SOURCE17} \
+    %{buildroot}%{_sysconfdir}/sysctl.d/file-max.conf
 
 install -p -d -m 0755 %{buildroot}%{_sysconfdir}/nginx/conf.d
 install -p -d -m 0755 %{buildroot}%{_sysconfdir}/nginx/default.d
@@ -334,6 +337,7 @@ fi
 %{_mandir}/man3/nginx.3pm*
 %{_mandir}/man8/nginx.8*
 %config(noreplace) %{_sysconfdir}/sysconfig/nginx
+%config(noreplace) %{_sysconfdir}/sysctl.d/file-max.conf
 %{_initrddir}/nginx
 %config(noreplace) %{_sysconfdir}/nginx/fastcgi.conf
 %config(noreplace) %{_sysconfdir}/nginx/fastcgi.conf.default
