@@ -106,7 +106,7 @@ gpgcheck=0
 
 注：使用本文编译的nginx，已经修改了这两处地方，不需要单独增加。
 
-编辑文件`vi /etc/sysconfig/ngin`，增加1行：
+编辑文件`vi /etc/sysconfig/nginx`，增加1行：
 ```
 ulimit -HSn 655360
 ```
