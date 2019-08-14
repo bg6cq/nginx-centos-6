@@ -2,7 +2,7 @@
 %global  nginx_user          nginx
 
 Name:              nginx
-Version:           1.14.2
+Version:           1.16.1
 Release:           2%{?dist}
 
 Summary:           A high performance web server and reverse proxy server
@@ -17,9 +17,9 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Source0:           http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:           http://nginx.org/download/nginx-%{version}.tar.gz.asc
-Source2:           openssl-1.1.1a.tar.gz
+Source2:           openssl-1.1.1c.tar.gz
 Source3:           ngx_devel_kit-0.3.0.tar.gz
-Source4:           lua-nginx-module-0.10.13.tar.gz
+Source4:           lua-nginx-module-0.10.15.tar.gz
 Source10:          nginx.init
 Source11:          nginx.logrotate
 Source12:          nginx.conf
@@ -181,8 +181,8 @@ sed -i -e 's/http2 //g' %{SOURCE14}
 # variable.
 export DESTDIR=%{buildroot}
 ./configure \
-    --with-openssl=openssl-1.1.1a  \
-    --add-module=lua-nginx-module-0.10.13 \
+    --with-openssl=openssl-1.1.1c  \
+    --add-module=lua-nginx-module-0.10.15 \
     --add-module=ngx_devel_kit-0.3.0 \
     --prefix=%{_datadir}/nginx \
     --sbin-path=%{_sbindir}/nginx \
