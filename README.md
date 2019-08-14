@@ -161,4 +161,4 @@ CentOS epel 默认的nginx之外，下载了如下软件：
 * http://luajit.org/download/LuaJIT-2.0.5.tar.gz
 * https://www.openssl.org/source/openssl-1.1.1c.tar.gz
 * https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz
-* https://github.com/openresty/lua-nginx-module/archive/v0.10.15.tar.gz
+* https://github.com/openresty/lua-nginx-module/archive/v0.10.13.tar.gz
