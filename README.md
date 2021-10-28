@@ -157,8 +157,8 @@ grep "Max open files" /proc/`cat /var/run/nginx.pid`/limits
 
 CentOS epel 默认的nginx之外，下载了如下软件：
 
-* http://nginx.org/download/nginx-1.16.1.tar.gz http://nginx.org/download/nginx-1.16.1.tar.gz.asc
+* http://nginx.org/download/nginx-1.20.1.tar.gz http://nginx.org/download/nginx-1.20.1.tar.gz.asc
 * http://luajit.org/download/LuaJIT-2.0.5.tar.gz
-* https://www.openssl.org/source/openssl-1.1.1c.tar.gz
-* https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz
+* https://www.openssl.org/source/openssl-1.1.1l.tar.gz
+* https://github.com/simplresty/ngx_devel_kit/archive/v0.3.1.tar.gz
 * https://github.com/openresty/lua-nginx-module/archive/v0.10.13.tar.gz
